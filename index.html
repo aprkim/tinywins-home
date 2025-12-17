@@ -1,0 +1,283 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Tiny Wins — tiny steps, real progress. Habits, body, money, and learning." />
+  <title>Tiny Wins</title>
+
+  <style>
+    :root{
+      /* Light + calm (Tabbi-style minimal) */
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --card: #ffffff;
+      --soft: #f8fafc;
+
+      /* Tabbi red */
+      --accent: #BF3143;
+      --accentSoft: rgba(191,49,67,.12);
+
+      --radius: 16px;
+      --max: 980px;
+
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 48px 20px 56px; }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .brandTitle{
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .brandTag{
+      color: var(--muted);
+      font-size: 13px;
+    }
+    nav{
+      display:flex;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    nav a:hover{ color: var(--text); }
+
+    .hero{
+      padding: 20px 0 28px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    h1{
+      margin: 0 0 10px;
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      font-weight: 750;
+    }
+    .sub{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 62ch;
+    }
+    .cta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .btn:hover{ background: var(--soft); }
+    .btnPrimary{
+      border-color: rgba(191,49,67,.35);
+      background: var(--accentSoft);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    @media (max-width: 720px){
+      header{ flex-direction:column; align-items:flex-start; }
+      .grid{ grid-template-columns: 1fr; }
+      h1{ font-size: 38px; }
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      padding: 18px;
+      transition: background .12s ease, border-color .12s ease, transform .12s ease;
+    }
+    .card:hover{
+      background: var(--soft);
+      border-color: #dbe2ea;
+      transform: translateY(-1px);
+    }
+    .cardTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .cardTitle{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 750;
+      margin: 0;
+    }
+    .icon{
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: var(--accent);
+    }
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      background: #fff;
+      white-space: nowrap;
+    }
+    .desc{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 54ch;
+    }
+    .cardLink{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .cardLink:hover{ text-decoration: underline; }
+
+    footer{
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="brandTitle">Tiny Wins</div>
+        <div class="brandTag">Tiny steps. Real progress.</div>
+      </div>
+      <nav>
+        <a href="#tools">Tools</a>
+        <a href="#why">Why</a>
+      </nav>
+    </header>
+
+```
+<section class="hero">
+  <h1>Track life, gently.</h1>
+  <p class="sub">
+    Tiny Wins is a small ecosystem of simple tools for habits, health, money, and learning.
+    No overwhelm. No guilt. Just tiny steps that add up.
+  </p>
+  <div class="cta">
+    <a class="btn btnPrimary" href="https://wins.tinywins.space/">Open Tiny Wins</a>
+    <a class="btn" href="#tools">See all tools</a>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="grid">
+    <article class="card">
+      <div class="cardTop">
+        <h2 class="cardTitle"><span class="icon"></span>Tiny Wins</h2>
+        <span class="pill">Live</span>
+      </div>
+      <p class="desc">Habit tracking and simple todos for daily consistency.</p>
+      <a class="cardLink" href="https://wins.tinywins.space/">Open →</a>
+    </article>
+
+    <article class="card">
+      <div class="cardTop">
+        <h2 class="cardTitle"><span class="icon"></span>Tiny Body</h2>
+        <span class="pill">Soon</span>
+      </div>
+      <p class="desc">Eating log, calories tracking, and exercise tracking — without pressure.</p>
+      <a class="cardLink" href="https://body.tinywins.space/">Open →</a>
+    </article>
+
+    <article class="card">
+      <div class="cardTop">
+        <h2 class="cardTitle"><span class="icon"></span>Tiny Money</h2>
+        <span class="pill">Soon</span>
+      </div>
+      <p class="desc">Monthly spending tracking and planning in small, clear steps.</p>
+      <a class="cardLink" href="https://money.tinywins.space/">Open →</a>
+    </article>
+
+    <article class="card">
+      <div class="cardTop">
+        <h2 class="cardTitle"><span class="icon"></span>Tiny Learn</h2>
+        <span class="pill">Soon</span>
+      </div>
+      <p class="desc">Track what you read and watch — and keep tiny notes you’ll remember.</p>
+      <a class="cardLink" href="https://learn.tinywins.space/">Open →</a>
+    </article>
+  </div>
+</section>
+
+<section id="why" style="margin-top:28px;">
+  <p style="margin:0; color: var(--muted); font-size:14px; line-height:1.7; max-width:72ch;">
+    Most tools try to do everything. Tiny Wins helps you do one small thing — consistently.
+  </p>
+</section>
+
+<footer>
+  <div>© <span id="y"></span> Tiny Wins</div>
+  <div>No pressure, ever.</div>
+</footer>
+```
+
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
