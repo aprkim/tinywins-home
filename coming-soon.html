@@ -1,0 +1,182 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Coming Soon - TinyWins" />
+  <title>Coming Soon - TinyWins</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --accent: #BF3143;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --max: 980px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 28px 0;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+
+    .brandTitle{
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: .2px;
+    }
+
+    .brandTag{
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    nav{
+      display:flex;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    nav a:hover{ color: #BF3143; }
+
+    .container{
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .icon-box{
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1{
+      font-size: 42px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      letter-spacing: -0.5px;
+    }
+
+    p{
+      font-size: 18px;
+      color: var(--muted);
+      margin: 0 0 32px;
+      line-height: 1.6;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover{
+      opacity: 0.9;
+    }
+
+    footer{
+      margin-top: auto;
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      justify-content:center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="brandTitle">TinyWins</div>
+        <div class="brandTag">Tiny steps. Real progress.</div>
+      </div>
+      <nav>
+        <a href="mailto:aprkim@gmail.com">Contact</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="icon-box">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 160V60" stroke="#A8C69F" stroke-width="4" stroke-linecap="round"/>
+
+          <path d="M102 135C115 135 125 125 125 110C125 95 102 85 102 85V135Z" fill="#2D3E50"/>
+          <path d="M102 105C115 105 125 95 125 80C125 65 102 55 102 55V105Z" fill="#A8C69F"/>
+          <path d="M102 75C112 75 120 68 120 58C120 48 102 40 102 40V75Z" fill="#CDE0A1"/>
+
+          <path d="M98 145C85 145 75 135 75 120C75 105 98 95 98 95V145Z" fill="#7898B5"/>
+          <path d="M98 115C85 115 75 105 75 90C75 75 98 65 98 65V115Z" fill="#A8C69F"/>
+          <path d="M98 85C88 85 80 78 80 68C80 58 98 50 98 50V85Z" fill="#2D3E50"/>
+
+          <circle cx="115" cy="120" r="4" fill="#CDE0A1"/>
+          <circle cx="85" cy="130" r="4" fill="#2D3E50"/>
+          <circle cx="110" cy="90" r="3" fill="#7898B5"/>
+
+          <path d="M70 160H130" stroke="#2D3E50" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+      </div>
+      <h1>Coming Soon</h1>
+      <p>We're working hard to bring you something amazing. Stay tuned!</p>
+      <a href="/" class="btn">Back to Home</a>
+    </div>
+
+    <footer>
+      <div>© 2025 TinyWins</div>
+    </footer>
+  </div>
+</body>
+</html>

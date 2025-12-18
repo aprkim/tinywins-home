@@ -10,17 +10,22 @@
 
   <style>
     :root{
-      /* Light + calm (Tabbi-style minimal) */
-      --bg: #ffffff;
-      --text: #0f172a;
+      /* Cool calm palette with subtle green */
+      --bg: #f7f9f8;
+      --text: #1e293b;
       --muted: #64748b;
-      --border: #e5e7eb;
+      --border: #e2e8f0;
       --card: #ffffff;
-      --soft: #f8fafc;
+      --soft: #f0f4f3;
 
-      /* Tabbi red */
+      /* Main accent */
       --accent: #BF3143;
-      --accentSoft: rgba(191,49,67,.12);
+      --accentSoft: rgba(191,49,67,.08);
+
+      /* Nature accents */
+      --greenBg: #ecfdf5;
+      --greenBorder: #6ee7b7;
+      --greenText: #047857;
 
       --radius: 16px;
       --max: 980px;
@@ -173,9 +178,9 @@
       white-space: nowrap;
     }
     .pillLive{
-      background: #d1fae5;
-      border-color: #6ee7b7;
-      color: #065f46;
+      background: var(--greenBg);
+      border-color: var(--greenBorder);
+      color: var(--greenText);
     }
     .desc{
       margin: 0 0 14px;
@@ -193,6 +198,13 @@
       color: var(--accent);
     }
     .cardLink:hover{ text-decoration: underline; }
+
+    .forest{
+      width: 100%;
+      max-width: var(--max);
+      margin: 48px auto 32px;
+      padding: 0 20px;
+    }
 
     footer{
       margin-top: auto;
@@ -239,7 +251,7 @@
       <p class="desc">Eating log, calories tracking, and exercise tracking — without pressure.</p>
     </a>
 
-    <a href="https://money.tinywins.space/" class="card">
+    <a href="/coming-soon.html" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Money</h2>
         <span class="pill">Soon</span>
@@ -247,7 +259,7 @@
       <p class="desc">Monthly spending tracking and planning in small, clear steps.</p>
     </a>
 
-    <a href="https://learn.tinywins.space/" class="card">
+    <a href="/coming-soon.html" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Learn</h2>
         <span class="pill">Soon</span>
@@ -257,6 +269,41 @@
   </div>
 </section>
 
+<div class="forest">
+  <svg width="100%" height="120" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <!-- Ground line -->
+    <line x1="0" y1="110" x2="800" y2="110" stroke="#cbd5e1" stroke-width="2" opacity="0.5"/>
+
+    <!-- Plant 1 - Small -->
+    <line x1="100" y1="110" x2="100" y2="70" stroke="#a6c5a3" stroke-width="3" opacity="0.7"/>
+    <circle cx="95" cy="85" r="12" fill="#7596b3" opacity="0.6"/>
+    <circle cx="105" cy="80" r="14" fill="#a6c5a3" opacity="0.65"/>
+
+    <!-- Plant 2 - Medium -->
+    <line x1="220" y1="110" x2="220" y2="50" stroke="#a6c5a3" stroke-width="3" opacity="0.7"/>
+    <circle cx="212" cy="75" r="15" fill="#324252" opacity="0.6"/>
+    <circle cx="228" cy="70" r="17" fill="#cbdfa5" opacity="0.65"/>
+    <circle cx="220" cy="55" r="13" fill="#a6c5a3" opacity="0.7"/>
+
+    <!-- Plant 3 - Tall (center) -->
+    <line x1="400" y1="110" x2="400" y2="30" stroke="#a6c5a3" stroke-width="4" opacity="0.7"/>
+    <circle cx="390" cy="70" r="18" fill="#7596b3" opacity="0.6"/>
+    <circle cx="410" cy="65" r="20" fill="#324252" opacity="0.6"/>
+    <circle cx="400" cy="45" r="16" fill="#cbdfa5" opacity="0.65"/>
+    <circle cx="395" cy="35" r="12" fill="#a6c5a3" opacity="0.7"/>
+
+    <!-- Plant 4 - Medium -->
+    <line x1="560" y1="110" x2="560" y2="55" stroke="#a6c5a3" stroke-width="3" opacity="0.7"/>
+    <circle cx="552" cy="80" r="16" fill="#a6c5a3" opacity="0.65"/>
+    <circle cx="568" cy="75" r="15" fill="#7596b3" opacity="0.6"/>
+    <circle cx="560" cy="60" r="13" fill="#cbdfa5" opacity="0.65"/>
+
+    <!-- Plant 5 - Small -->
+    <line x1="700" y1="110" x2="700" y2="75" stroke="#a6c5a3" stroke-width="3" opacity="0.7"/>
+    <circle cx="693" cy="90" r="13" fill="#324252" opacity="0.6"/>
+    <circle cx="707" cy="85" r="14" fill="#a6c5a3" opacity="0.65"/>
+  </svg>
+</div>
 
 <footer>
   <div>© 2025 TinyWins</div>
