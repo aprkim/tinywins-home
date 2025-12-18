@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Tiny Wins — tiny steps, real progress. Habits, body, money, and learning." />
   <title>Tiny Wins</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <style>
     :root{
@@ -36,7 +37,15 @@
     }
 
     a{ color: inherit; text-decoration: none; }
-    .wrap{ max-width: var(--max); margin: 0 auto; padding: 48px 20px 56px; }
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 48px 20px 56px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
     header{
       display:flex;
@@ -52,12 +61,12 @@
     }
     .brandTitle{
       font-weight: 700;
-      font-size: 18px;
+      font-size: 32px;
       letter-spacing: .2px;
     }
     .brandTag{
       color: var(--muted);
-      font-size: 13px;
+      font-size: 18px;
     }
     nav{
       display:flex;
@@ -65,7 +74,7 @@
       color: var(--muted);
       font-size: 13px;
     }
-    nav a:hover{ color: var(--text); }
+    nav a:hover{ color: #BF3143; }
 
     .hero{
       padding: 20px 0 28px;
@@ -164,9 +173,9 @@
       white-space: nowrap;
     }
     .pillLive{
-      background: #dcfce7;
-      border-color: #86efac;
-      color: #166534;
+      background: #d1fae5;
+      border-color: #6ee7b7;
+      color: #065f46;
     }
     .desc{
       margin: 0 0 14px;
@@ -186,7 +195,7 @@
     .cardLink:hover{ text-decoration: underline; }
 
     footer{
-      margin-top: 40px;
+      margin-top: auto;
       padding-top: 18px;
       border-top: 1px solid var(--border);
       color: var(--muted);
@@ -204,73 +213,50 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="brandTitle">Tiny Wins</div>
+        <div class="brandTitle">TinyWins</div>
         <div class="brandTag">Tiny steps. Real progress.</div>
       </div>
       <nav>
-        <a href="#tools">Tools</a>
-        <a href="#why">Why</a>
+        <a href="mailto:aprkim@gmail.com">Contact</a>
       </nav>
     </header>
 
-```
-<section class="hero">
-  <h1>Track life, gently.</h1>
-  <p class="sub">
-    Tiny Wins is a small ecosystem of simple tools for habits, health, money, and learning.
-    No overwhelm. No guilt. Just tiny steps that add up.
-  </p>
-  <div class="cta">
-    <a class="btn btnPrimary" href="https://wins.tinywins.space/">Open Tiny Wins</a>
-    <a class="btn" href="#tools">See all tools</a>
-  </div>
-</section>
-
 <section id="tools">
   <div class="grid">
-    <article class="card">
+    <a href="https://wins.tinywins.space/" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Wins</h2>
-        <span class="pill">Live</span>
+        <span class="pill pillLive">Live</span>
       </div>
       <p class="desc">Habit tracking and simple todos for daily consistency.</p>
-      <a class="cardLink" href="https://wins.tinywins.space/">Open →</a>
-    </article>
+    </a>
 
-    <article class="card">
+    <a href="https://body.tinywins.space/" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Body</h2>
-        <span class="pill">Soon</span>
+        <span class="pill pillLive">Live</span>
       </div>
       <p class="desc">Eating log, calories tracking, and exercise tracking — without pressure.</p>
-      <a class="cardLink" href="https://body.tinywins.space/">Open →</a>
-    </article>
+    </a>
 
-    <article class="card">
+    <a href="https://money.tinywins.space/" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Money</h2>
         <span class="pill">Soon</span>
       </div>
       <p class="desc">Monthly spending tracking and planning in small, clear steps.</p>
-      <a class="cardLink" href="https://money.tinywins.space/">Open →</a>
-    </article>
+    </a>
 
-    <article class="card">
+    <a href="https://learn.tinywins.space/" class="card">
       <div class="cardTop">
         <h2 class="cardTitle"><span class="icon"></span>Tiny Learn</h2>
         <span class="pill">Soon</span>
       </div>
-      <p class="desc">Track what you read and watch — and keep tiny notes you’ll remember.</p>
-      <a class="cardLink" href="https://learn.tinywins.space/">Open →</a>
-    </article>
+      <p class="desc">Track what you read and watch — and keep tiny notes you'll remember.</p>
+    </a>
   </div>
 </section>
 
-<section id="why" style="margin-top:28px;">
-  <p style="margin:0; color: var(--muted); font-size:14px; line-height:1.7; max-width:72ch;">
-    Most tools try to do everything. Tiny Wins helps you do one small thing — consistently.
-  </p>
-</section>
 
 <footer>
   <div>© 2025 TinyWins</div>
