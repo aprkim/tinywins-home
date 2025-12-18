@@ -1,0 +1,140 @@
+/**
+ * TinyWins Brand Color Palette
+ * A calm, sophisticated palette with cool grays, nature-inspired sage greens,
+ * and an energetic red accent for mindful productivity.
+ */
+
+:root {
+  /* ===================================
+     PRIMARY BRAND COLORS
+     =================================== */
+
+  /* Main Brand Accent - TinyWins Red */
+  --accent: #BF3143;
+  --accent-soft: rgba(191, 49, 67, 0.08);
+  --accent-hover: #a52a3a;
+
+
+  /* ===================================
+     NEUTRALS (Cool Gray Base)
+     =================================== */
+
+  /* Backgrounds */
+  --bg: #f7f9f8;              /* Main page background (subtle green tint) */
+  --card: #ffffff;            /* Card/panel backgrounds */
+  --soft: #f0f4f3;            /* Hover states, subtle backgrounds */
+
+  /* Text */
+  --text: #1e293b;            /* Primary text color */
+  --muted: #64748b;           /* Secondary text, labels, metadata */
+
+  /* Borders & Dividers */
+  --border: #e2e8f0;          /* Borders, dividers, subtle lines */
+  --ground-line: #cbd5e1;     /* Ground/baseline elements */
+
+
+  /* ===================================
+     NATURE GREENS (Sage/Forest Tones)
+     =================================== */
+
+  /* Status & Positive Actions */
+  --green-bg: #e8f4ed;        /* Green pill background */
+  --green-border: #a6c5a3;    /* Green pill border */
+  --green-text: #324252;      /* Green pill text */
+
+  /* Plant Illustration Palette */
+  --sage: #a6c5a3;            /* Sage green (stems, foliage) */
+  --sage-lite: #cbdfa5;       /* Light sage (bright foliage) */
+  --blue-gray: #7596b3;       /* Blue-gray (foliage variation) */
+  --slate-deep: #324252;      /* Deep slate (dark foliage, contrast) */
+
+
+  /* ===================================
+     SEMANTIC COLORS
+     =================================== */
+
+  /* Success */
+  --success: #a6c5a3;
+  --success-bg: #e8f4ed;
+  --success-text: #324252;
+
+  /* Info */
+  --info: #7596b3;
+  --info-bg: #e8f1f8;
+  --info-text: #324252;
+
+  /* Warning */
+  --warning: #d4a574;
+  --warning-bg: #fef5ed;
+  --warning-text: #5c3d1f;
+
+  /* Error */
+  --error: #BF3143;
+  --error-bg: rgba(191, 49, 67, 0.08);
+  --error-text: #7f1f2d;
+
+
+  /* ===================================
+     DESIGN TOKENS
+     =================================== */
+
+  --radius: 16px;
+  --max-width: 980px;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+/* ===================================
+   USAGE GUIDELINES
+   =================================== */
+
+/*
+PRIMARY ACTIONS & CTAs
+- Use: var(--accent) #BF3143
+- Examples: Primary buttons, important links, call-to-action elements
+
+POSITIVE STATUS & GROWTH
+- Use: Sage greens (--success, --green-bg, --green-border)
+- Examples: "Live" badges, success states, growth indicators, completion states
+
+CALM BACKGROUNDS
+- Use: var(--bg) #f7f9f8
+- Creates cohesive nature-inspired feel throughout the site
+
+TEXT HIERARCHY
+- Headlines: var(--text) #1e293b
+- Body/Secondary: var(--muted) #64748b
+- Muted/Tertiary: Reduce opacity of --text
+
+ILLUSTRATIONS & DECORATIVE ELEMENTS
+- Stick to plant palette: --sage, --sage-lite, --blue-gray, --slate-deep
+- Keeps visual consistency across decorative elements
+
+CARDS & SURFACES
+- Background: var(--card) #ffffff
+- Hover: var(--soft) #f0f4f3
+- Border: var(--border) #e2e8f0
+
+SPACING & LAYOUT
+- Border radius: var(--radius) 16px
+- Max content width: var(--max-width) 980px
+- Typography: var(--sans)
+*/
+
+
+/* ===================================
+   COLOR SWATCHES (For Reference)
+   =================================== */
+
+/*
+#BF3143 - TinyWins Red (Primary Accent)
+#f7f9f8 - Cool Gray Background
+#1e293b - Dark Slate Text
+#64748b - Muted Gray
+#e2e8f0 - Border Gray
+#a6c5a3 - Sage Green
+#cbdfa5 - Light Sage
+#7596b3 - Blue-Gray
+#324252 - Deep Slate
+#e8f4ed - Success/Green Background
+*/
