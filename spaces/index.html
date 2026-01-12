@@ -211,6 +211,8 @@
   <!-- Firebase SDKs (compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
 
   <script>
     // =========================
@@ -225,6 +227,8 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
+
 
     // IMPORTANT: this must match your deployed URL (and be in Firebase Auth authorized domains)
     const ACTION_URL = "https://tinywins.space/spaces/";
@@ -293,7 +297,9 @@
       console.log("Sending link to:", email, "ACTION_URL:", ACTION_URL);
 
       try {
-        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        console.log("About to call sendSignInLinkToEmail with:", { email, actionCodeSettings });
+        const result = await auth.sendSignInLinkToEmail(email, actionCodeSettings);
+        console.log("sendSignInLinkToEmail result:", result);
         window.localStorage.setItem(EMAIL_KEY, email);
 
         submitButton.disabled = false;
