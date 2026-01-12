@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tiny Spaces</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -289,6 +290,8 @@
       submitButton.disabled = true;
       submitButton.textContent = "Sending…";
 
+      console.log("Sending link to:", email, "ACTION_URL:", ACTION_URL);
+
       try {
         await auth.sendSignInLinkToEmail(email, actionCodeSettings);
         window.localStorage.setItem(EMAIL_KEY, email);
@@ -302,7 +305,8 @@
         submitButton.textContent = "Send magic link";
 
         // Common: auth/unauthorized-domain
-        showStatus(err?.message || "Could not send link. Please try again.", true);
+        const errorMessage = err?.code ? `${err.message} (${err.code})` : (err?.message || "Could not send link. Please try again.");
+        showStatus(errorMessage, true);
       }
     });
 
