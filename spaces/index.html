@@ -1,1 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Spaces</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f7f9f8;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+    }
+
+    @media (max-width: 500px) {
+      .card {
+        padding: 32px 24px;
+      }
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #1e293b;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #1e293b;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="email"]:focus {
+      border-color: #BF3143;
+    }
+
+    input[type="email"]::placeholder {
+      color: #94a3b8;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #ffffff;
+      background: #BF3143;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-bottom: 12px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:active {
+      opacity: 0.8;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: #f0f4f3;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+    }
+
+    button.secondary:hover {
+      background: #e8f4ed;
+      opacity: 1;
+    }
+
+    .helper-text {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: -4px;
+    }
+
+    .success-message {
+      display: none;
+    }
+
+    .success-message.active {
+      display: block;
+    }
+
+    .success-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .success-subtext {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .error-message {
+      display: none;
+      font-size: 14px;
+      color: #BF3143;
+      background: rgba(191,49,67,.08);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .error-message.active {
+      display: block;
+    }
+
+    .form-container {
+      display: block;
+    }
+
+    .form-container.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Tiny Spaces</h1>
+      <p class="subtitle">Save and recover your Tiny spaces with email. Optional.</p>
+
+      <!-- Error message (hidden by default) -->
+      <div class="error-message" id="errorMessage"></div>
+
+      <!-- Sign-in form -->
+      <div class="form-container" id="formContainer">
+        <form id="signInForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <button type="submit" id="submitButton">Send magic link</button>
+          <p class="helper-text">No password. No spam.</p>
+        </form>
+      </div>
+
+      <!-- Success state (hidden by default) -->
+      <div class="success-message" id="successMessage">
+        <p class="success-text">You're signed in.</p>
+        <p class="success-subtext">This page will soon show your saved Tiny spaces.</p>
+        <button class="secondary" id="signOutButton">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // Firebase Email Link Auth Placeholder
+    // ==========================================
+    //
+    // TODO: Initialize Firebase
+    // import { initializeApp } from 'firebase/app';
+    // import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
+    //
+    // const firebaseConfig = { ... };
+    // const app = initializeApp(firebaseConfig);
+    // const auth = getAuth(app);
+    //
+    // const actionCodeSettings = {
+    //   url: 'https://tinywins.space/spaces',
+    //   handleCodeInApp: true,
+    // };
+
+    const form = document.getElementById('signInForm');
+    const emailInput = document.getElementById('email');
+    const submitButton = document.getElementById('submitButton');
+    const formContainer = document.getElementById('formContainer');
+    const successMessage = document.getElementById('successMessage');
+    const signOutButton = document.getElementById('signOutButton');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        showError('Please enter a valid email address.');
+        return;
+      }
+
+      // Disable button during submission
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      hideError();
+
+      try {
+        // TODO: Send sign-in link via Firebase
+        // await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+        // window.localStorage.setItem('emailForSignIn', email);
+
+        // Mock success for now
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Show success state
+        showSignedInState();
+
+      } catch (error) {
+        // TODO: Handle Firebase errors
+        // showError(error.message);
+        showError('Something went wrong. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send magic link';
+      }
+    });
+
+    // Handle sign out
+    signOutButton.addEventListener('click', () => {
+      // TODO: Sign out via Firebase
+      // await signOut(auth);
+
+      showSignInForm();
+    });
+
+    // TODO: Check if user is returning via email link
+    // if (isSignInWithEmailLink(auth, window.location.href)) {
+    //   let email = window.localStorage.getItem('emailForSignIn');
+    //   if (!email) {
+    //     email = window.prompt('Please provide your email for confirmation');
+    //   }
+    //   signInWithEmailLink(auth, email, window.location.href)
+    //     .then(() => {
+    //       window.localStorage.removeItem('emailForSignIn');
+    //       showSignedInState();
+    //     })
+    //     .catch((error) => {
+    //       showError(error.message);
+    //     });
+    // }
+
+    // UI helper functions
+    function showSignedInState() {
+      formContainer.classList.add('hidden');
+      successMessage.classList.add('active');
+    }
+
+    function showSignInForm() {
+      formContainer.classList.remove('hidden');
+      successMessage.classList.remove('active');
+      emailInput.value = '';
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send magic link';
+    }
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.add('active');
+    }
+
+    function hideError() {
+      errorMessage.classList.remove('active');
+    }
+  </script>
+</body>
+</html>
 
