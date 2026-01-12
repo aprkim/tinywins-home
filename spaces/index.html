@@ -200,22 +200,43 @@
       </div>
 
       <!-- Success state -->
-      <div class="success-message" id="successMessage">
-        <p class="success-text">You're signed in.</p>
-        <p class="success-subtext">This page will soon show your saved Tiny spaces.</p>
-        <div id="spacesSection" style="text-align:left; margin-top: 18px;">
-  <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom: 12px;">
-    <div style="font-weight:700; color:#1e293b;">Saved spaces</div>
-    <button class="secondary" id="addTestSpaceBtn" type="button" style="width:auto; padding:10px 14px; border-radius:999px;">
-      Add test
-    </button>
+       <!-- Success state -->
+<div class="success-message" id="successMessage">
+
+  <p class="success-text">You're signed in.</p>
+  <p class="success-subtext">
+    This page will soon show your saved Tiny spaces.
+  </p>
+
+  <!-- Saved spaces -->
+  <div id="spacesSection" style="text-align:left; margin-top: 18px;">
+    <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom: 12px;">
+      <div style="font-weight:700; color:#1e293b;">Saved spaces</div>
+      <button
+        class="secondary"
+        id="addTestSpaceBtn"
+        type="button"
+        style="width:auto; padding:10px 14px; border-radius:999px;"
+      >
+        Add test
+      </button>
+    </div>
+
+    <div id="spacesList" style="display:grid; gap:10px;"></div>
   </div>
 
-  <div id="spacesList" style="display:grid; gap:10px;"></div>
+  <!-- Sign out -->
+  <button
+    class="secondary"
+    id="signOutButton"
+    type="button"
+    style="margin-top: 16px;"
+  >
+    Sign out
+  </button>
+
 </div>
 
-        <button class="secondary" id="signOutButton" type="button">Sign out</button>
-      </div>
     </div>
   </div>
 
@@ -262,6 +283,7 @@
     const signOutButton = document.getElementById("signOutButton");
     const statusBox = document.getElementById("statusBox");
     const addTestBtn = document.getElementById("addTestSpaceBtn");
+    const spacesListEl = document.getElementById("spacesList");
 
 
     function showStatus(message, isError = false) {
@@ -361,17 +383,96 @@
     // =========================
     // 3) Show signed-in state if already logged in (same browser)
     // =========================
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        showSignedInState();
-      } else {
-        // If they are not on a magic-link callback, show form
-        if (!auth.isSignInWithEmailLink(window.location.href)) {
-          showSignInForm();
-        }
-      }
-    });
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    showSignedInState();
 
+    // Load spaces
+    try {
+      const spaces = await listSpacesForUser(user.uid);
+      renderSpaces(spaces);
+    } catch (e) {
+      console.error("Failed to load spaces:", e);
+      showStatus(e?.message || "Couldn't load saved spaces.", true);
+    }
+
+    // Wire Add test (only once)
+    if (addTestBtn && !addTestBtn.dataset.bound) {
+      addTestBtn.dataset.bound = "true";
+      addTestBtn.addEventListener("click", async () => {
+        try {
+          addTestBtn.disabled = true;
+          await addTestSpace(user.uid);
+          const spaces = await listSpacesForUser(user.uid);
+          renderSpaces(spaces);
+        } catch (e) {
+          console.error("Failed to add test:", e);
+          showStatus(e?.message || "Couldn't add test space.", true);
+        } finally {
+          addTestBtn.disabled = false;
+        }
+      });
+    }
+
+  } else {
+    if (!auth.isSignInWithEmailLink(window.location.href)) {
+      showSignInForm();
+    }
+  }
+});
+
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderSpaces(spaces) {
+  if (!spacesListEl) return;
+
+  if (!spaces || spaces.length === 0) {
+    spacesListEl.innerHTML = `<div style="color:#64748b; font-size:14px;">No saved spaces yet.</div>`;
+    return;
+  }
+
+  spacesListEl.innerHTML = spaces.map(s => `
+    <div style="border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; background:#fff;">
+      <div style="font-weight:700; color:#1e293b; margin-bottom:4px;">
+        ${escapeHtml(s.label || "Untitled space")}
+      </div>
+      <div style="color:#64748b; font-size:13px;">
+        ${escapeHtml((s.appId || "").toUpperCase())} · ${escapeHtml(s.syncCode || "")}
+      </div>
+    </div>
+  `).join("");
+}
+
+async function listSpacesForUser(uid) {
+  const snap = await db
+    .collection("users")
+    .doc(uid)
+    .collection("spaces")
+    .orderBy("createdAt", "desc")
+    .get();
+
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function addTestSpace(uid) {
+  const docId = "do_test_" + Date.now();
+  await db.collection("users").doc(uid).collection("spaces").doc(docId).set({
+    appId: "do",
+    syncCode: "test-code",
+    label: "Test Space",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+    
     // =========================
     // 4) Sign out
     // =========================
