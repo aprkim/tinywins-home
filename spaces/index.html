@@ -200,12 +200,11 @@
       </div>
 
       <!-- Success state -->
-       <!-- Success state -->
 <div class="success-message" id="successMessage">
 
   <p class="success-text">You're signed in.</p>
   <p class="success-subtext">
-    This page will soon show your saved Tiny spaces.
+    Your saved Tiny spaces.
   </p>
 
   <!-- Saved spaces -->
@@ -329,12 +328,8 @@
       submitButton.disabled = true;
       submitButton.textContent = "Sending…";
 
-      console.log("Sending link to:", email, "ACTION_URL:", ACTION_URL);
-
       try {
-        console.log("About to call sendSignInLinkToEmail with:", { email, actionCodeSettings });
-        const result = await auth.sendSignInLinkToEmail(email, actionCodeSettings);
-        console.log("sendSignInLinkToEmail result:", result);
+        await auth.sendSignInLinkToEmail(email, actionCodeSettings);
         window.localStorage.setItem(EMAIL_KEY, email);
 
         submitButton.disabled = false;
