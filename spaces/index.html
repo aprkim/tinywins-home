@@ -203,6 +203,17 @@
       <div class="success-message" id="successMessage">
         <p class="success-text">You're signed in.</p>
         <p class="success-subtext">This page will soon show your saved Tiny spaces.</p>
+        <div id="spacesSection" style="text-align:left; margin-top: 18px;">
+  <div style="display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom: 12px;">
+    <div style="font-weight:700; color:#1e293b;">Saved spaces</div>
+    <button class="secondary" id="addTestSpaceBtn" type="button" style="width:auto; padding:10px 14px; border-radius:999px;">
+      Add test
+    </button>
+  </div>
+
+  <div id="spacesList" style="display:grid; gap:10px;"></div>
+</div>
+
         <button class="secondary" id="signOutButton" type="button">Sign out</button>
       </div>
     </div>
@@ -250,6 +261,8 @@
     const successMessage = document.getElementById("successMessage");
     const signOutButton = document.getElementById("signOutButton");
     const statusBox = document.getElementById("statusBox");
+    const addTestBtn = document.getElementById("addTestSpaceBtn");
+
 
     function showStatus(message, isError = false) {
       statusBox.textContent = message;
