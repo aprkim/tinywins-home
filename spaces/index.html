@@ -213,12 +213,39 @@
       <div style="font-weight:700; color:#1e293b;">Saved spaces</div>
       <button
         class="secondary"
-        id="addTestSpaceBtn"
+        id="addSpaceBtn"
         type="button"
         style="width:auto; padding:10px 14px; border-radius:999px;"
       >
-        Add test
+        + Add space
       </button>
+    </div>
+
+    <!-- Add space form (hidden by default) -->
+    <div id="addSpaceForm" style="display:none; border:1px solid #e2e8f0; border-radius:12px; padding:16px; margin-bottom:12px; background:#f7f9f8;">
+      <div style="margin-bottom:12px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#1e293b; margin-bottom:6px;">App</label>
+        <select id="appSelect" style="width:100%; padding:8px 12px; font-size:14px; border:1px solid #e2e8f0; border-radius:8px; background:#fff;">
+          <option value="meals">Tiny Meals</option>
+          <option value="do">Tiny Do</option>
+        </select>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#1e293b; margin-bottom:6px;">Sync Code</label>
+        <input type="text" id="syncCodeInput" placeholder="Enter your sync code" style="width:100%; padding:8px 12px; font-size:14px; border:1px solid #e2e8f0; border-radius:8px;">
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="display:block; font-size:13px; font-weight:600; color:#1e293b; margin-bottom:6px;">Label (optional)</label>
+        <input type="text" id="labelInput" placeholder="e.g., Family Meals" style="width:100%; padding:8px 12px; font-size:14px; border:1px solid #e2e8f0; border-radius:8px;">
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button id="saveSpaceBtn" type="button" style="flex:1; background:#BF3143; color:#fff; padding:10px; border-radius:999px; border:none; font-weight:600; cursor:pointer;">
+          Save
+        </button>
+        <button id="cancelSpaceBtn" type="button" class="secondary" style="flex:1; padding:10px; border-radius:999px;">
+          Cancel
+        </button>
+      </div>
     </div>
 
     <div id="spacesList" style="display:grid; gap:10px;"></div>
@@ -238,6 +265,30 @@
 
     </div>
   </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+<script>
+  // tinywins-account (umbrella) config — same as /spaces
+  const tinyAccountConfig = {
+    apiKey: "AIzaSyBF4Dm-N-0rKQfVSnmPamxnZDO-jWlYXZQ",
+    authDomain: "tinywins-account.firebaseapp.com",
+    projectId: "tinywins-account",
+    appId: "1:500103077791:web:3402c4b9bb0aab89bf27aa"
+  };
+
+  // IMPORTANT: avoid collisions if Tiny Do already uses Firebase for something else
+  const tinyAccountApp = firebase.apps?.find(a => a.name === "tinyAccount")
+    ? firebase.app("tinyAccount")
+    : firebase.initializeApp(tinyAccountConfig, "tinyAccount");
+
+  const tinyAuth = firebase.auth(tinyAccountApp);
+  const tinyDb = firebase.firestore(tinyAccountApp);
+</script>
+
+  
 
   <!-- Firebase SDKs (compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
