@@ -266,35 +266,10 @@
     </div>
   </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-
-<script>
-  // tinywins-account (umbrella) config — same as /spaces
-  const tinyAccountConfig = {
-    apiKey: "AIzaSyBF4Dm-N-0rKQfVSnmPamxnZDO-jWlYXZQ",
-    authDomain: "tinywins-account.firebaseapp.com",
-    projectId: "tinywins-account",
-    appId: "1:500103077791:web:3402c4b9bb0aab89bf27aa"
-  };
-
-  // IMPORTANT: avoid collisions if Tiny Do already uses Firebase for something else
-  const tinyAccountApp = firebase.apps?.find(a => a.name === "tinyAccount")
-    ? firebase.app("tinyAccount")
-    : firebase.initializeApp(tinyAccountConfig, "tinyAccount");
-
-  const tinyAuth = firebase.auth(tinyAccountApp);
-  const tinyDb = firebase.firestore(tinyAccountApp);
-</script>
-
-  
-
   <!-- Firebase SDKs (compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-
 
   <script>
     // =========================
@@ -332,8 +307,16 @@
     const successMessage = document.getElementById("successMessage");
     const signOutButton = document.getElementById("signOutButton");
     const statusBox = document.getElementById("statusBox");
-    const addTestBtn = document.getElementById("addTestSpaceBtn");
     const spacesListEl = document.getElementById("spacesList");
+
+    // Add space form elements
+    const addSpaceBtn = document.getElementById("addSpaceBtn");
+    const addSpaceForm = document.getElementById("addSpaceForm");
+    const appSelect = document.getElementById("appSelect");
+    const syncCodeInput = document.getElementById("syncCodeInput");
+    const labelInput = document.getElementById("labelInput");
+    const saveSpaceBtn = document.getElementById("saveSpaceBtn");
+    const cancelSpaceBtn = document.getElementById("cancelSpaceBtn");
 
 
     function showStatus(message, isError = false) {
@@ -442,20 +425,53 @@ auth.onAuthStateChanged(async (user) => {
       showStatus(e?.message || "Couldn't load saved spaces.", true);
     }
 
-    // Wire Add test (only once)
-    if (addTestBtn && !addTestBtn.dataset.bound) {
-      addTestBtn.dataset.bound = "true";
-      addTestBtn.addEventListener("click", async () => {
+    // Wire up Add Space form (only once)
+    if (addSpaceBtn && !addSpaceBtn.dataset.bound) {
+      addSpaceBtn.dataset.bound = "true";
+
+      // Show form when clicking "+ Add space"
+      addSpaceBtn.addEventListener("click", () => {
+        addSpaceForm.style.display = "block";
+        addSpaceBtn.style.display = "none";
+      });
+
+      // Cancel button
+      cancelSpaceBtn.addEventListener("click", () => {
+        addSpaceForm.style.display = "none";
+        addSpaceBtn.style.display = "block";
+        // Reset form
+        syncCodeInput.value = "";
+        labelInput.value = "";
+      });
+
+      // Save button
+      saveSpaceBtn.addEventListener("click", async () => {
+        const appId = appSelect.value;
+        const syncCode = syncCodeInput.value.trim();
+        const label = labelInput.value.trim();
+
+        if (!syncCode) {
+          showStatus("Please enter a sync code.", true);
+          return;
+        }
+
         try {
-          addTestBtn.disabled = true;
-          await addTestSpace(user.uid);
+          saveSpaceBtn.disabled = true;
+          await addSpace(user.uid, appId, syncCode, label);
           const spaces = await listSpacesForUser(user.uid);
           renderSpaces(spaces);
+
+          // Reset and hide form
+          addSpaceForm.style.display = "none";
+          addSpaceBtn.style.display = "block";
+          syncCodeInput.value = "";
+          labelInput.value = "";
+          hideStatus();
         } catch (e) {
-          console.error("Failed to add test:", e);
-          showStatus(e?.message || "Couldn't add test space.", true);
+          console.error("Failed to add space:", e);
+          showStatus(e?.message || "Couldn't save space.", true);
         } finally {
-          addTestBtn.disabled = false;
+          saveSpaceBtn.disabled = false;
         }
       });
     }
@@ -508,12 +524,12 @@ async function listSpacesForUser(uid) {
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
-async function addTestSpace(uid) {
-  const docId = "do_test_" + Date.now();
+async function addSpace(uid, appId, syncCode, label) {
+  const docId = `${appId}_${syncCode}_${Date.now()}`;
   await db.collection("users").doc(uid).collection("spaces").doc(docId).set({
-    appId: "do",
-    syncCode: "test-code",
-    label: "Test Space",
+    appId: appId,
+    syncCode: syncCode,
+    label: label || "",
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
 }
