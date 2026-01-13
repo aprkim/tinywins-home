@@ -75,11 +75,29 @@
     }
     nav{
       display:flex;
+      align-items:center;
       gap: 14px;
       color: var(--muted);
       font-size: 13px;
     }
-    nav a:hover{ color: #BF3143; }
+    nav a:hover{ color: var(--accent); }
+    .signInBtn{
+      display:inline-flex;
+      align-items:center;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accentSoft);
+      border: 1px solid rgba(191,49,67,.18);
+      border-radius: 999px;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .signInBtn:hover{
+      background: rgba(191,49,67,.14);
+      border-color: rgba(191,49,67,.28);
+      color: var(--accent);
+    }
 
     .hero{
       padding: 20px 0 28px;
@@ -230,6 +248,7 @@
       </div>
       <nav>
         <a href="mailto:aprkim@gmail.com">Contact</a>
+        <a href="/spaces/" class="signInBtn" aria-label="Access your Spaces & sync">Sign in</a>
       </nav>
     </header>
 
