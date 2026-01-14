@@ -447,6 +447,7 @@
       submitButton.disabled = false;
       submitButton.textContent = "Send link";
       emailInput.value = "";
+      emailInput.readOnly = false;
       hideStatus();
     }
 
@@ -471,8 +472,9 @@
         window.localStorage.setItem(EMAIL_KEY, email);
 
         submitButton.disabled = false;
-        submitButton.textContent = "Send link";
-        showStatus("Magic link sent. Check your email.");
+        submitButton.textContent = "Resend link";
+        emailInput.readOnly = true;
+        showStatus("Check your email for the sign-in link.");
       } catch (err) {
         console.error(err);
         submitButton.disabled = false;
