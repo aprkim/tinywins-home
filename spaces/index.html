@@ -250,14 +250,14 @@
 </head>
 
 <body>
-  <!-- Delete confirmation modal -->
-  <div class="modal-overlay" id="deleteModal">
+  <!-- Remove space confirmation modal -->
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
     <div class="modal-box">
-      <div class="modal-title">Delete space?</div>
-      <div class="modal-message">This will remove the saved space from your account.</div>
+      <div class="modal-title" id="modalTitle">Remove this saved space?</div>
+      <div class="modal-message" id="modalDesc">This only removes it from your Tiny Spaces account. It does not delete data inside the app.</div>
       <div class="modal-actions">
         <button class="btn-cancel" id="modalCancel">Cancel</button>
-        <button class="btn-delete" id="modalConfirm">Delete</button>
+        <button class="btn-delete" id="modalConfirm">Remove</button>
       </div>
     </div>
   </div>
@@ -660,7 +660,7 @@ function renderSpaces(spaces) {
         style="position:absolute; top:12px; right:12px; background:none; border:none; cursor:pointer; color:#94a3b8; font-size:14px; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:6px; transition:color 0.15s, background 0.15s; line-height:1;"
         onmouseover="this.style.color='#BF3143'; this.style.background='rgba(191,49,67,0.08)';"
         onmouseout="this.style.color='#94a3b8'; this.style.background='none';"
-        title="Delete space"
+        title="Remove space"
       >✕</button>
       <div style="font-weight:700; color:#1e293b; margin-bottom:4px; padding-right:32px;">
         ${escapeHtml(s.label || "Untitled space")}
@@ -698,15 +698,48 @@ const deleteModal = document.getElementById("deleteModal");
 const modalCancel = document.getElementById("modalCancel");
 const modalConfirm = document.getElementById("modalConfirm");
 let pendingDeleteId = null;
+let previouslyFocusedElement = null;
 
 function showDeleteModal(spaceId) {
   pendingDeleteId = spaceId;
+  previouslyFocusedElement = document.activeElement;
   deleteModal.classList.add("active");
+  // Focus the cancel button by default (safer action)
+  modalCancel.focus();
+  // Add ESC key listener
+  document.addEventListener("keydown", handleModalKeydown);
 }
 
 function hideDeleteModal() {
   deleteModal.classList.remove("active");
   pendingDeleteId = null;
+  document.removeEventListener("keydown", handleModalKeydown);
+  // Restore focus
+  if (previouslyFocusedElement) {
+    previouslyFocusedElement.focus();
+    previouslyFocusedElement = null;
+  }
+}
+
+function handleModalKeydown(e) {
+  if (e.key === "Escape") {
+    hideDeleteModal();
+    return;
+  }
+  // Focus trap: Tab cycles between Cancel and Remove buttons
+  if (e.key === "Tab") {
+    const focusableEls = [modalCancel, modalConfirm];
+    const firstEl = focusableEls[0];
+    const lastEl = focusableEls[focusableEls.length - 1];
+
+    if (e.shiftKey && document.activeElement === firstEl) {
+      e.preventDefault();
+      lastEl.focus();
+    } else if (!e.shiftKey && document.activeElement === lastEl) {
+      e.preventDefault();
+      firstEl.focus();
+    }
+  }
 }
 
 modalCancel.addEventListener("click", hideDeleteModal);
@@ -727,8 +760,8 @@ modalConfirm.addEventListener("click", async () => {
     renderSpaces(spaces);
     hideDeleteModal();
   } catch (e) {
-    console.error("Failed to delete space:", e);
-    showStatus(e?.message || "Couldn't delete space.", true);
+    console.error("Failed to remove space:", e);
+    showStatus(e?.message || "Couldn't remove space.", true);
     hideDeleteModal();
   } finally {
     modalConfirm.disabled = false;
