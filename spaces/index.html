@@ -163,10 +163,76 @@
     }
 
     a { color: #64748b; text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Custom confirm modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 320px;
+      width: 100%;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+      text-align: center;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .modal-message {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .modal-actions button {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    .modal-actions .btn-cancel {
+      background: #f0f4f3;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+    }
+    .modal-actions .btn-cancel:hover { background: #e8f4ed; opacity: 1; }
+    .modal-actions .btn-delete {
+      background: #BF3143;
+      color: #fff;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Delete confirmation modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+      <div class="modal-title">Delete space?</div>
+      <div class="modal-message">This will remove the saved space from your account.</div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="modalCancel">Cancel</button>
+        <button class="btn-delete" id="modalConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="card">
       <h1>Tiny Spaces</h1>
@@ -543,20 +609,50 @@ async function addSpace(uid, appId, syncCode, label) {
   });
 }
 
-async function deleteSpace(spaceId) {
-  if (!confirm("Delete this space?")) return;
+// Custom modal confirm
+const deleteModal = document.getElementById("deleteModal");
+const modalCancel = document.getElementById("modalCancel");
+const modalConfirm = document.getElementById("modalConfirm");
+let pendingDeleteId = null;
+
+function showDeleteModal(spaceId) {
+  pendingDeleteId = spaceId;
+  deleteModal.classList.add("active");
+}
+
+function hideDeleteModal() {
+  deleteModal.classList.remove("active");
+  pendingDeleteId = null;
+}
+
+modalCancel.addEventListener("click", hideDeleteModal);
+deleteModal.addEventListener("click", (e) => {
+  if (e.target === deleteModal) hideDeleteModal();
+});
+
+modalConfirm.addEventListener("click", async () => {
+  if (!pendingDeleteId) return;
 
   const user = auth.currentUser;
   if (!user) return;
 
   try {
-    await db.collection("users").doc(user.uid).collection("spaces").doc(spaceId).delete();
+    modalConfirm.disabled = true;
+    await db.collection("users").doc(user.uid).collection("spaces").doc(pendingDeleteId).delete();
     const spaces = await listSpacesForUser(user.uid);
     renderSpaces(spaces);
+    hideDeleteModal();
   } catch (e) {
     console.error("Failed to delete space:", e);
     showStatus(e?.message || "Couldn't delete space.", true);
+    hideDeleteModal();
+  } finally {
+    modalConfirm.disabled = false;
   }
+});
+
+function deleteSpace(spaceId) {
+  showDeleteModal(spaceId);
 }
 
     
