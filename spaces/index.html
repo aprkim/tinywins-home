@@ -164,6 +164,13 @@
 
     a { color: #64748b; text-decoration: underline; text-underline-offset: 3px; }
 
+    /* Global focus style for inputs/selects */
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #BF3143 !important;
+      box-shadow: 0 0 0 3px rgba(191, 49, 67, 0.14) !important;
+    }
+
     /* Custom modals */
     .modal-overlay {
       display: none;
