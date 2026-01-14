@@ -278,7 +278,7 @@
   <div class="container">
     <div class="card">
       <h1>Tiny Spaces</h1>
-      <p class="subtitle">Save and recover your Tiny spaces with email.</p>
+      <p class="subtitle">Save your Tiny spaces with email.</p>
 
       <div class="status" id="statusBox"></div>
 
@@ -297,13 +297,12 @@
             />
           </div>
 
-          <button type="submit" id="submitButton">Send magic link</button>
+          <button type="submit" id="submitButton">Send link</button>
           <p class="helper-text">No password. No spam.</p>
         </form>
 
         <p class="fineprint">
-          Saving to email helps you recover this space later.
-          Sharing still uses sync codes.
+          For recovery only. Sharing still uses sync codes.
         </p>
       </div>
 
@@ -446,7 +445,7 @@
       formContainer.classList.remove("hidden");
       successMessage.classList.remove("active");
       submitButton.disabled = false;
-      submitButton.textContent = "Send magic link";
+      submitButton.textContent = "Send link";
       emailInput.value = "";
       hideStatus();
     }
@@ -472,12 +471,12 @@
         window.localStorage.setItem(EMAIL_KEY, email);
 
         submitButton.disabled = false;
-        submitButton.textContent = "Send magic link";
+        submitButton.textContent = "Send link";
         showStatus("Magic link sent. Check your email.");
       } catch (err) {
         console.error(err);
         submitButton.disabled = false;
-        submitButton.textContent = "Send magic link";
+        submitButton.textContent = "Send link";
 
         // Common: auth/unauthorized-domain
         const errorMessage = err?.code ? `${err.message} (${err.code})` : (err?.message || "Could not send link. Please try again.");
