@@ -164,7 +164,7 @@
 
     a { color: #64748b; text-decoration: underline; text-underline-offset: 3px; }
 
-    /* Custom confirm modal */
+    /* Custom modals */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -180,7 +180,7 @@
       background: #fff;
       border-radius: 16px;
       padding: 28px;
-      max-width: 320px;
+      max-width: 340px;
       width: 100%;
       box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
       text-align: center;
@@ -194,9 +194,27 @@
     .modal-message {
       font-size: 14px;
       color: #64748b;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       line-height: 1.5;
     }
+    .modal-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #1e293b;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      outline: none;
+      margin-bottom: 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .modal-input:focus {
+      border-color: #BF3143;
+      box-shadow: 0 0 0 3px rgba(191, 49, 67, 0.14);
+    }
+    .modal-input::placeholder { color: #94a3b8; }
     .modal-actions {
       display: flex;
       gap: 10px;
@@ -213,6 +231,10 @@
       border: 1px solid #e2e8f0;
     }
     .modal-actions .btn-cancel:hover { background: #e8f4ed; opacity: 1; }
+    .modal-actions .btn-primary {
+      background: #BF3143;
+      color: #fff;
+    }
     .modal-actions .btn-delete {
       background: #BF3143;
       color: #fff;
@@ -229,6 +251,19 @@
       <div class="modal-actions">
         <button class="btn-cancel" id="modalCancel">Cancel</button>
         <button class="btn-delete" id="modalConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email prompt modal -->
+  <div class="modal-overlay" id="emailPromptModal">
+    <div class="modal-box">
+      <div class="modal-title">Confirm your email</div>
+      <div class="modal-message">Enter your email to complete sign-in.</div>
+      <input type="email" class="modal-input" id="emailPromptInput" placeholder="you@example.com" autocomplete="email">
+      <div class="modal-actions">
+        <button class="btn-cancel" id="emailPromptCancel">Cancel</button>
+        <button class="btn-primary" id="emailPromptConfirm">Continue</button>
       </div>
     </div>
   </div>
@@ -451,13 +486,55 @@
     // =========================
     // 2) Complete sign-in if this page is opened via email link
     // =========================
+
+    // Email prompt modal elements
+    const emailPromptModal = document.getElementById("emailPromptModal");
+    const emailPromptInput = document.getElementById("emailPromptInput");
+    const emailPromptCancel = document.getElementById("emailPromptCancel");
+    const emailPromptConfirm = document.getElementById("emailPromptConfirm");
+
+    function showEmailPrompt() {
+      return new Promise((resolve) => {
+        emailPromptInput.value = "";
+        emailPromptModal.classList.add("active");
+        emailPromptInput.focus();
+
+        function cleanup() {
+          emailPromptModal.classList.remove("active");
+          emailPromptCancel.removeEventListener("click", onCancel);
+          emailPromptConfirm.removeEventListener("click", onConfirm);
+          emailPromptInput.removeEventListener("keydown", onKeydown);
+        }
+
+        function onCancel() {
+          cleanup();
+          resolve(null);
+        }
+
+        function onConfirm() {
+          const value = emailPromptInput.value.trim();
+          cleanup();
+          resolve(value || null);
+        }
+
+        function onKeydown(e) {
+          if (e.key === "Enter") onConfirm();
+          if (e.key === "Escape") onCancel();
+        }
+
+        emailPromptCancel.addEventListener("click", onCancel);
+        emailPromptConfirm.addEventListener("click", onConfirm);
+        emailPromptInput.addEventListener("keydown", onKeydown);
+      });
+    }
+
     (async function completeSignInIfLink() {
       try {
         if (!auth.isSignInWithEmailLink(window.location.href)) return;
 
         let email = window.localStorage.getItem(EMAIL_KEY);
         if (!email) {
-          email = window.prompt("Please confirm your email to sign in:");
+          email = await showEmailPrompt();
         }
         if (!email) {
           showStatus("Email is required to complete sign-in.", true);
