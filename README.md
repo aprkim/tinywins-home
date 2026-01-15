@@ -29,7 +29,7 @@ Each product lives in its own repository and subdomain.
 
 - **Tiny Learn** → Reading lists, watch lists, learning logs *(coming soon)*
 
-- **Tiny Money** → Monthly cost tracking & planning *(coming soon)*
+- **Tiny Money** → Monthly cost tracking & planning
 
 Each app is designed to work independently while sharing the same philosophy and visual language.
 
