@@ -245,6 +245,22 @@
       gap: 12px;
       flex-wrap: wrap;
     }
+    .creditLink{
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color .15s ease;
+    }
+    .creditLink:hover,
+    .creditLink:focus{
+      color: var(--accent);
+      outline: none;
+    }
+    .creditLink:focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
   </style>
 
 </head>
@@ -368,6 +384,7 @@
 
 <footer>
   <div>© 2026 TinyWins</div>
+  <div>Built by <a href="https://aprkim.com" class="creditLink">April Kim</a></div>
 </footer>
 
 <script>
